@@ -1,0 +1,419 @@
+
+Practica03.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000208  00000000  00000000  00000074  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000010  00800060  00000208  0000027c  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  0000028c  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000002bc  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  000002f8  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000008ef  00000000  00000000  00000330  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 00000706  00000000  00000000  00000c1f  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   00000358  00000000  00000000  00001325  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000088  00000000  00000000  00001680  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    000003db  00000000  00000000  00001708  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000379  00000000  00000000  00001ae3  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000060  00000000  00000000  00001e5c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   8:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+   c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  10:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  14:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  18:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  1c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  20:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  24:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  28:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  2c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  30:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  34:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  38:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  3c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  40:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  44:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  48:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  4c:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+  50:	0c 94 3f 00 	jmp	0x7e	; 0x7e <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+
+00000060 <__do_copy_data>:
+  60:	10 e0       	ldi	r17, 0x00	; 0
+  62:	a0 e6       	ldi	r26, 0x60	; 96
+  64:	b0 e0       	ldi	r27, 0x00	; 0
+  66:	e8 e0       	ldi	r30, 0x08	; 8
+  68:	f2 e0       	ldi	r31, 0x02	; 2
+  6a:	02 c0       	rjmp	.+4      	; 0x70 <__do_copy_data+0x10>
+  6c:	05 90       	lpm	r0, Z+
+  6e:	0d 92       	st	X+, r0
+  70:	a0 37       	cpi	r26, 0x70	; 112
+  72:	b1 07       	cpc	r27, r17
+  74:	d9 f7       	brne	.-10     	; 0x6c <__do_copy_data+0xc>
+  76:	0e 94 d3 00 	call	0x1a6	; 0x1a6 <main>
+  7a:	0c 94 02 01 	jmp	0x204	; 0x204 <_exit>
+
+0000007e <__bad_interrupt>:
+  7e:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+00000082 <tecladoFuncion>:
+}
+
+
+
+
+uint8_t tecladoFuncion(volatile uint8_t *DDRT, volatile uint8_t *PORTT, volatile uint8_t *PINT) {
+  82:	af 92       	push	r10
+  84:	bf 92       	push	r11
+  86:	df 92       	push	r13
+  88:	ef 92       	push	r14
+  8a:	ff 92       	push	r15
+  8c:	0f 93       	push	r16
+  8e:	1f 93       	push	r17
+  90:	cf 93       	push	r28
+  92:	df 93       	push	r29
+  94:	cd b7       	in	r28, 0x3d	; 61
+  96:	de b7       	in	r29, 0x3e	; 62
+  98:	60 97       	sbiw	r28, 0x10	; 16
+  9a:	0f b6       	in	r0, 0x3f	; 63
+  9c:	f8 94       	cli
+  9e:	de bf       	out	0x3e, r29	; 62
+  a0:	0f be       	out	0x3f, r0	; 63
+  a2:	cd bf       	out	0x3d, r28	; 61
+  a4:	9c 01       	movw	r18, r24
+
+	//uint8_t tecla;
+	//tecla = tecladoFuncion(&DDRA,&PORTA,&PINA);
+	
+		
+	volatile uint8_t teclado[4][4] =
+  a6:	90 e1       	ldi	r25, 0x10	; 16
+  a8:	e0 e6       	ldi	r30, 0x60	; 96
+  aa:	f0 e0       	ldi	r31, 0x00	; 0
+  ac:	de 01       	movw	r26, r28
+  ae:	11 96       	adiw	r26, 0x01	; 1
+  b0:	01 90       	ld	r0, Z+
+  b2:	0d 92       	st	X+, r0
+  b4:	9a 95       	dec	r25
+  b6:	e1 f7       	brne	.-8      	; 0xb0 <tecladoFuncion+0x2e>
+	{{10,3,2,1},
+	{11,6,5,4},
+	{12,9,8,7},
+	{13,14,0,15}};
+	
+	*DDRT = (1<<7)|(1<<6)|(1<<5)|(1<<4);		// definimos puerto para teclado
+  b8:	80 ef       	ldi	r24, 0xF0	; 240
+  ba:	d9 01       	movw	r26, r18
+  bc:	8c 93       	st	X, r24
+	
+	while(1) {
+		
+		*PORTT = 0b11111111;
+  be:	dd 24       	eor	r13, r13
+  c0:	da 94       	dec	r13
+		
+		for (uint8_t fila = 7; fila > 3; fila--) {
+			
+			*PORTT = ~(1<<fila);
+  c2:	ee 24       	eor	r14, r14
+  c4:	e3 94       	inc	r14
+  c6:	f1 2c       	mov	r15, r1
+	
+	*DDRT = (1<<7)|(1<<6)|(1<<5)|(1<<4);		// definimos puerto para teclado
+	
+	while(1) {
+		
+		*PORTT = 0b11111111;
+  c8:	fb 01       	movw	r30, r22
+  ca:	d0 82       	st	Z, r13
+  cc:	07 e0       	ldi	r16, 0x07	; 7
+  ce:	10 e0       	ldi	r17, 0x00	; 0
+		
+		for (uint8_t fila = 7; fila > 3; fila--) {
+			
+			*PORTT = ~(1<<fila);
+  d0:	58 01       	movw	r10, r16
+  d2:	c7 01       	movw	r24, r14
+  d4:	00 2e       	mov	r0, r16
+  d6:	02 c0       	rjmp	.+4      	; 0xdc <tecladoFuncion+0x5a>
+  d8:	88 0f       	add	r24, r24
+  da:	99 1f       	adc	r25, r25
+  dc:	0a 94       	dec	r0
+  de:	e2 f7       	brpl	.-8      	; 0xd8 <tecladoFuncion+0x56>
+  e0:	80 95       	com	r24
+  e2:	db 01       	movw	r26, r22
+  e4:	8c 93       	st	X, r24
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  e6:	00 c0       	rjmp	.+0      	; 0xe8 <tecladoFuncion+0x66>
+
+
+
+uint8_t cero_en_bit(volatile uint8_t *LUGAR, uint8_t BIT)
+{
+	return (!(*LUGAR&(1<<BIT)));
+  e8:	fa 01       	movw	r30, r20
+  ea:	80 81       	ld	r24, Z
+			*PORTT = ~(1<<fila);
+			_delay_us(2);
+			
+			for (uint8_t col = 0; col < 4; col++) {
+				
+				if (cero_en_bit(PINT,col)) {
+  ec:	80 ff       	sbrs	r24, 0
+  ee:	0f c0       	rjmp	.+30     	; 0x10e <tecladoFuncion+0x8c>
+  f0:	21 e0       	ldi	r18, 0x01	; 1
+  f2:	30 e0       	ldi	r19, 0x00	; 0
+
+
+
+uint8_t cero_en_bit(volatile uint8_t *LUGAR, uint8_t BIT)
+{
+	return (!(*LUGAR&(1<<BIT)));
+  f4:	da 01       	movw	r26, r20
+  f6:	8c 91       	ld	r24, X
+  f8:	f9 01       	movw	r30, r18
+			*PORTT = ~(1<<fila);
+			_delay_us(2);
+			
+			for (uint8_t col = 0; col < 4; col++) {
+				
+				if (cero_en_bit(PINT,col)) {
+  fa:	90 e0       	ldi	r25, 0x00	; 0
+  fc:	02 2e       	mov	r0, r18
+  fe:	02 c0       	rjmp	.+4      	; 0x104 <tecladoFuncion+0x82>
+ 100:	95 95       	asr	r25
+ 102:	87 95       	ror	r24
+ 104:	0a 94       	dec	r0
+ 106:	e2 f7       	brpl	.-8      	; 0x100 <tecladoFuncion+0x7e>
+ 108:	80 fd       	sbrc	r24, 0
+ 10a:	30 c0       	rjmp	.+96     	; 0x16c <tecladoFuncion+0xea>
+ 10c:	02 c0       	rjmp	.+4      	; 0x112 <tecladoFuncion+0x90>
+
+
+
+uint8_t cero_en_bit(volatile uint8_t *LUGAR, uint8_t BIT)
+{
+	return (!(*LUGAR&(1<<BIT)));
+ 10e:	e0 e0       	ldi	r30, 0x00	; 0
+ 110:	f0 e0       	ldi	r31, 0x00	; 0
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+ 112:	87 ea       	ldi	r24, 0xA7	; 167
+ 114:	91 e6       	ldi	r25, 0x61	; 97
+ 116:	01 97       	sbiw	r24, 0x01	; 1
+ 118:	f1 f7       	brne	.-4      	; 0x116 <tecladoFuncion+0x94>
+ 11a:	00 c0       	rjmp	.+0      	; 0x11c <tecladoFuncion+0x9a>
+ 11c:	00 00       	nop
+ 11e:	21 e0       	ldi	r18, 0x01	; 1
+ 120:	30 e0       	ldi	r19, 0x00	; 0
+ 122:	0e 2e       	mov	r0, r30
+ 124:	02 c0       	rjmp	.+4      	; 0x12a <tecladoFuncion+0xa8>
+ 126:	22 0f       	add	r18, r18
+ 128:	33 1f       	adc	r19, r19
+ 12a:	0a 94       	dec	r0
+ 12c:	e2 f7       	brpl	.-8      	; 0x126 <tecladoFuncion+0xa4>
+ 12e:	da 01       	movw	r26, r20
+ 130:	8c 91       	ld	r24, X
+			
+			for (uint8_t col = 0; col < 4; col++) {
+				
+				if (cero_en_bit(PINT,col)) {
+					_delay_ms(100);
+					while(cero_en_bit(PINT,col)) {}
+ 132:	90 e0       	ldi	r25, 0x00	; 0
+ 134:	82 23       	and	r24, r18
+ 136:	93 23       	and	r25, r19
+ 138:	89 2b       	or	r24, r25
+ 13a:	c9 f3       	breq	.-14     	; 0x12e <tecladoFuncion+0xac>
+ 13c:	87 ea       	ldi	r24, 0xA7	; 167
+ 13e:	91 e6       	ldi	r25, 0x61	; 97
+ 140:	01 97       	sbiw	r24, 0x01	; 1
+ 142:	f1 f7       	brne	.-4      	; 0x140 <tecladoFuncion+0xbe>
+ 144:	00 c0       	rjmp	.+0      	; 0x146 <tecladoFuncion+0xc4>
+ 146:	00 00       	nop
+					_delay_ms(100);
+					return teclado[7-fila][col];
+ 148:	87 e0       	ldi	r24, 0x07	; 7
+ 14a:	90 e0       	ldi	r25, 0x00	; 0
+ 14c:	8a 19       	sub	r24, r10
+ 14e:	9b 09       	sbc	r25, r11
+ 150:	88 0f       	add	r24, r24
+ 152:	99 1f       	adc	r25, r25
+ 154:	88 0f       	add	r24, r24
+ 156:	99 1f       	adc	r25, r25
+ 158:	a1 e0       	ldi	r26, 0x01	; 1
+ 15a:	b0 e0       	ldi	r27, 0x00	; 0
+ 15c:	ac 0f       	add	r26, r28
+ 15e:	bd 1f       	adc	r27, r29
+ 160:	8a 0f       	add	r24, r26
+ 162:	9b 1f       	adc	r25, r27
+ 164:	e8 0f       	add	r30, r24
+ 166:	f9 1f       	adc	r31, r25
+ 168:	80 81       	ld	r24, Z
+ 16a:	0d c0       	rjmp	.+26     	; 0x186 <tecladoFuncion+0x104>
+ 16c:	2f 5f       	subi	r18, 0xFF	; 255
+ 16e:	3f 4f       	sbci	r19, 0xFF	; 255
+		for (uint8_t fila = 7; fila > 3; fila--) {
+			
+			*PORTT = ~(1<<fila);
+			_delay_us(2);
+			
+			for (uint8_t col = 0; col < 4; col++) {
+ 170:	24 30       	cpi	r18, 0x04	; 4
+ 172:	31 05       	cpc	r19, r1
+ 174:	09 f0       	breq	.+2      	; 0x178 <tecladoFuncion+0xf6>
+ 176:	be cf       	rjmp	.-132    	; 0xf4 <tecladoFuncion+0x72>
+ 178:	01 50       	subi	r16, 0x01	; 1
+ 17a:	11 09       	sbc	r17, r1
+	
+	while(1) {
+		
+		*PORTT = 0b11111111;
+		
+		for (uint8_t fila = 7; fila > 3; fila--) {
+ 17c:	03 30       	cpi	r16, 0x03	; 3
+ 17e:	11 05       	cpc	r17, r1
+ 180:	09 f0       	breq	.+2      	; 0x184 <tecladoFuncion+0x102>
+ 182:	a6 cf       	rjmp	.-180    	; 0xd0 <tecladoFuncion+0x4e>
+ 184:	a1 cf       	rjmp	.-190    	; 0xc8 <tecladoFuncion+0x46>
+					return teclado[7-fila][col];
+				}
+			}
+		}
+	}
+ 186:	60 96       	adiw	r28, 0x10	; 16
+ 188:	0f b6       	in	r0, 0x3f	; 63
+ 18a:	f8 94       	cli
+ 18c:	de bf       	out	0x3e, r29	; 62
+ 18e:	0f be       	out	0x3f, r0	; 63
+ 190:	cd bf       	out	0x3d, r28	; 61
+ 192:	df 91       	pop	r29
+ 194:	cf 91       	pop	r28
+ 196:	1f 91       	pop	r17
+ 198:	0f 91       	pop	r16
+ 19a:	ff 90       	pop	r15
+ 19c:	ef 90       	pop	r14
+ 19e:	df 90       	pop	r13
+ 1a0:	bf 90       	pop	r11
+ 1a2:	af 90       	pop	r10
+ 1a4:	08 95       	ret
+
+000001a6 <main>:
+//*************************************************************************
+
+
+int main(void)
+{
+    DDRC = 0B11111111;
+ 1a6:	8f ef       	ldi	r24, 0xFF	; 255
+ 1a8:	84 bb       	out	0x14, r24	; 20
+	DDRD = 0B11111111;
+ 1aa:	81 bb       	out	0x11, r24	; 17
+
+    while (1) 
+    {
+		uint8_t lectura = tecladoFuncion(&DDRA, &PORTA, &PINA);
+ 1ac:	49 e3       	ldi	r20, 0x39	; 57
+ 1ae:	50 e0       	ldi	r21, 0x00	; 0
+ 1b0:	6b e3       	ldi	r22, 0x3B	; 59
+ 1b2:	70 e0       	ldi	r23, 0x00	; 0
+ 1b4:	8a e3       	ldi	r24, 0x3A	; 58
+ 1b6:	90 e0       	ldi	r25, 0x00	; 0
+ 1b8:	0e 94 41 00 	call	0x82	; 0x82 <tecladoFuncion>
+		uint16_t numeroDisplay = 0;
+	
+		for (int i = 0; i<16; i++)
+ 1bc:	20 e0       	ldi	r18, 0x00	; 0
+ 1be:	30 e0       	ldi	r19, 0x00	; 0
+		{
+			if(lectura==i){
+ 1c0:	68 2f       	mov	r22, r24
+ 1c2:	70 e0       	ldi	r23, 0x00	; 0
+ 1c4:	62 17       	cp	r22, r18
+ 1c6:	73 07       	cpc	r23, r19
+ 1c8:	b9 f4       	brne	.+46     	; 0x1f8 <main+0x52>
+				
+				if (lectura==13)
+ 1ca:	8d 30       	cpi	r24, 0x0D	; 13
+ 1cc:	19 f4       	brne	.+6      	; 0x1d4 <main+0x2e>
+				{
+					PORTD = 0;
+ 1ce:	12 ba       	out	0x12, r1	; 18
+					PORTC = 0;
+ 1d0:	15 ba       	out	0x15, r1	; 21
+ 1d2:	12 c0       	rjmp	.+36     	; 0x1f8 <main+0x52>
+				}
+				else if(lectura <10){
+ 1d4:	8a 30       	cpi	r24, 0x0A	; 10
+ 1d6:	80 f4       	brcc	.+32     	; 0x1f8 <main+0x52>
+					numeroDisplay = PIND;
+ 1d8:	40 b3       	in	r20, 0x10	; 16
+					numeroDisplay = (numeroDisplay<<8) | PINC;
+ 1da:	50 e0       	ldi	r21, 0x00	; 0
+ 1dc:	54 2f       	mov	r21, r20
+ 1de:	44 27       	eor	r20, r20
+ 1e0:	93 b3       	in	r25, 0x13	; 19
+					numeroDisplay = (numeroDisplay<<4) | lectura;
+ 1e2:	49 2b       	or	r20, r25
+ 1e4:	42 95       	swap	r20
+ 1e6:	52 95       	swap	r21
+ 1e8:	50 7f       	andi	r21, 0xF0	; 240
+ 1ea:	54 27       	eor	r21, r20
+ 1ec:	40 7f       	andi	r20, 0xF0	; 240
+ 1ee:	54 27       	eor	r21, r20
+ 1f0:	46 2b       	or	r20, r22
+ 1f2:	57 2b       	or	r21, r23
+					PORTD = numeroDisplay>>8;
+ 1f4:	52 bb       	out	0x12, r21	; 18
+					PORTC = (uint8_t)numeroDisplay;
+ 1f6:	45 bb       	out	0x15, r20	; 21
+    while (1) 
+    {
+		uint8_t lectura = tecladoFuncion(&DDRA, &PORTA, &PINA);
+		uint16_t numeroDisplay = 0;
+	
+		for (int i = 0; i<16; i++)
+ 1f8:	2f 5f       	subi	r18, 0xFF	; 255
+ 1fa:	3f 4f       	sbci	r19, 0xFF	; 255
+ 1fc:	20 31       	cpi	r18, 0x10	; 16
+ 1fe:	31 05       	cpc	r19, r1
+ 200:	09 f7       	brne	.-62     	; 0x1c4 <main+0x1e>
+ 202:	d4 cf       	rjmp	.-88     	; 0x1ac <main+0x6>
+
+00000204 <_exit>:
+ 204:	f8 94       	cli
+
+00000206 <__stop_program>:
+ 206:	ff cf       	rjmp	.-2      	; 0x206 <__stop_program>
