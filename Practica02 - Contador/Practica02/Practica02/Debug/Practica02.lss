@@ -1,0 +1,247 @@
+
+Practica02.elf:     file format elf32-avr
+
+Sections:
+Idx Name          Size      VMA       LMA       File off  Algn
+  0 .text         00000150  00000000  00000000  00000054  2**1
+                  CONTENTS, ALLOC, LOAD, READONLY, CODE
+  1 .data         00000000  00800060  00800060  000001a4  2**0
+                  CONTENTS, ALLOC, LOAD, DATA
+  2 .comment      00000030  00000000  00000000  000001a4  2**0
+                  CONTENTS, READONLY
+  3 .note.gnu.avr.deviceinfo 0000003c  00000000  00000000  000001d4  2**2
+                  CONTENTS, READONLY
+  4 .debug_aranges 00000038  00000000  00000000  00000210  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  5 .debug_info   000007e4  00000000  00000000  00000248  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  6 .debug_abbrev 0000068a  00000000  00000000  00000a2c  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  7 .debug_line   0000031b  00000000  00000000  000010b6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+  8 .debug_frame  00000074  00000000  00000000  000013d4  2**2
+                  CONTENTS, READONLY, DEBUGGING
+  9 .debug_str    00000386  00000000  00000000  00001448  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 10 .debug_loc    00000218  00000000  00000000  000017ce  2**0
+                  CONTENTS, READONLY, DEBUGGING
+ 11 .debug_ranges 00000028  00000000  00000000  000019e6  2**0
+                  CONTENTS, READONLY, DEBUGGING
+
+Disassembly of section .text:
+
+00000000 <__vectors>:
+   0:	0c 94 2a 00 	jmp	0x54	; 0x54 <__ctors_end>
+   4:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   8:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+   c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  10:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  14:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  18:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  1c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  20:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  24:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  28:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  2c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  30:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  34:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  38:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  3c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  40:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  44:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  48:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  4c:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+  50:	0c 94 34 00 	jmp	0x68	; 0x68 <__bad_interrupt>
+
+00000054 <__ctors_end>:
+  54:	11 24       	eor	r1, r1
+  56:	1f be       	out	0x3f, r1	; 63
+  58:	cf e5       	ldi	r28, 0x5F	; 95
+  5a:	d4 e0       	ldi	r29, 0x04	; 4
+  5c:	de bf       	out	0x3e, r29	; 62
+  5e:	cd bf       	out	0x3d, r28	; 61
+  60:	0e 94 61 00 	call	0xc2	; 0xc2 <main>
+  64:	0c 94 a6 00 	jmp	0x14c	; 0x14c <_exit>
+
+00000068 <__bad_interrupt>:
+  68:	0c 94 00 00 	jmp	0	; 0x0 <__vectors>
+
+0000006c <mostrar>:
+uint8_t uno_en_bit(volatile uint8_t *LUGAR, uint8_t BIT)
+{
+	return (*LUGAR&(1<<BIT));
+}
+
+void mostrar(volatile uint8_t cont){
+  6c:	cf 93       	push	r28
+  6e:	df 93       	push	r29
+  70:	1f 92       	push	r1
+  72:	cd b7       	in	r28, 0x3d	; 61
+  74:	de b7       	in	r29, 0x3e	; 62
+  76:	89 83       	std	Y+1, r24	; 0x01
+	uint8_t aux1, aux2;
+	aux1 = aux2 = cont;
+  78:	29 81       	ldd	r18, Y+1	; 0x01
+	aux1 = aux1%10;
+	aux2 = aux2/10;
+  7a:	8d ec       	ldi	r24, 0xCD	; 205
+  7c:	28 9f       	mul	r18, r24
+  7e:	91 2d       	mov	r25, r1
+  80:	11 24       	eor	r1, r1
+  82:	96 95       	lsr	r25
+  84:	96 95       	lsr	r25
+  86:	96 95       	lsr	r25
+	aux2 = aux2%10;
+	PORTC = aux2 | (aux1<<4);
+  88:	49 2f       	mov	r20, r25
+  8a:	44 0f       	add	r20, r20
+  8c:	34 2f       	mov	r19, r20
+  8e:	33 0f       	add	r19, r19
+  90:	33 0f       	add	r19, r19
+  92:	34 0f       	add	r19, r20
+  94:	23 1b       	sub	r18, r19
+  96:	40 e1       	ldi	r20, 0x10	; 16
+  98:	24 9f       	mul	r18, r20
+  9a:	90 01       	movw	r18, r0
+  9c:	11 24       	eor	r1, r1
+  9e:	98 9f       	mul	r25, r24
+  a0:	81 2d       	mov	r24, r1
+  a2:	11 24       	eor	r1, r1
+  a4:	86 95       	lsr	r24
+  a6:	86 95       	lsr	r24
+  a8:	86 95       	lsr	r24
+  aa:	88 0f       	add	r24, r24
+  ac:	38 2f       	mov	r19, r24
+  ae:	33 0f       	add	r19, r19
+  b0:	33 0f       	add	r19, r19
+  b2:	83 0f       	add	r24, r19
+  b4:	98 1b       	sub	r25, r24
+  b6:	29 2b       	or	r18, r25
+  b8:	25 bb       	out	0x15, r18	; 21
+	
+  ba:	0f 90       	pop	r0
+  bc:	df 91       	pop	r29
+  be:	cf 91       	pop	r28
+  c0:	08 95       	ret
+
+000000c2 <main>:
+void mostrar(volatile uint8_t cont);
+//*************************************************************************
+
+
+int main(void)
+{
+  c2:	cf 93       	push	r28
+  c4:	df 93       	push	r29
+  c6:	1f 92       	push	r1
+  c8:	cd b7       	in	r28, 0x3d	; 61
+  ca:	de b7       	in	r29, 0x3e	; 62
+	DDRA = 0B01111110;
+  cc:	8e e7       	ldi	r24, 0x7E	; 126
+  ce:	8a bb       	out	0x1a, r24	; 26
+	PORTA = 0B10000001;
+  d0:	81 e8       	ldi	r24, 0x81	; 129
+  d2:	8b bb       	out	0x1b, r24	; 27
+	DDRC = 0B11111111;
+  d4:	8f ef       	ldi	r24, 0xFF	; 255
+  d6:	84 bb       	out	0x14, r24	; 20
+	volatile uint8_t cont = 0;
+  d8:	19 82       	std	Y+1, r1	; 0x01
+		else if (cero_en_bit(&PINA,7))
+		{
+			_delay_ms(60);
+			while (cero_en_bit(&PINA,7)){}
+			_delay_ms(60);
+			if(cont<=0) cont = 1;
+  da:	11 e0       	ldi	r17, 0x01	; 1
+	PORTA = 0B10000001;
+	DDRC = 0B11111111;
+	volatile uint8_t cont = 0;
+    while (1) 
+    {
+		if (cero_en_bit(&PINA,0)){
+  dc:	c8 99       	sbic	0x19, 0	; 25
+  de:	1b c0       	rjmp	.+54     	; 0x116 <main+0x54>
+	#else
+		//round up by default
+		__ticks_dc = (uint32_t)(ceil(fabs(__tmp)));
+	#endif
+
+	__builtin_avr_delay_cycles(__ticks_dc);
+  e0:	87 e9       	ldi	r24, 0x97	; 151
+  e2:	9a e3       	ldi	r25, 0x3A	; 58
+  e4:	01 97       	sbiw	r24, 0x01	; 1
+  e6:	f1 f7       	brne	.-4      	; 0xe4 <main+0x22>
+  e8:	00 c0       	rjmp	.+0      	; 0xea <main+0x28>
+  ea:	00 00       	nop
+			_delay_ms(60);
+			while (cero_en_bit(&PINA,0)){}
+  ec:	c8 9b       	sbis	0x19, 0	; 25
+  ee:	fe cf       	rjmp	.-4      	; 0xec <main+0x2a>
+  f0:	87 e9       	ldi	r24, 0x97	; 151
+  f2:	9a e3       	ldi	r25, 0x3A	; 58
+  f4:	01 97       	sbiw	r24, 0x01	; 1
+  f6:	f1 f7       	brne	.-4      	; 0xf4 <main+0x32>
+  f8:	00 c0       	rjmp	.+0      	; 0xfa <main+0x38>
+  fa:	00 00       	nop
+			_delay_ms(60);
+	
+				cont++;
+  fc:	89 81       	ldd	r24, Y+1	; 0x01
+  fe:	8f 5f       	subi	r24, 0xFF	; 255
+ 100:	89 83       	std	Y+1, r24	; 0x01
+				if(cont == 100) {
+ 102:	89 81       	ldd	r24, Y+1	; 0x01
+ 104:	84 36       	cpi	r24, 0x64	; 100
+ 106:	19 f4       	brne	.+6      	; 0x10e <main+0x4c>
+					cont--;
+ 108:	89 81       	ldd	r24, Y+1	; 0x01
+ 10a:	81 50       	subi	r24, 0x01	; 1
+ 10c:	89 83       	std	Y+1, r24	; 0x01
+				}
+				mostrar(cont);
+ 10e:	89 81       	ldd	r24, Y+1	; 0x01
+ 110:	0e 94 36 00 	call	0x6c	; 0x6c <mostrar>
+ 114:	e3 cf       	rjmp	.-58     	; 0xdc <main+0x1a>
+		
+		}
+		else if (cero_en_bit(&PINA,7))
+ 116:	cf 99       	sbic	0x19, 7	; 25
+ 118:	e1 cf       	rjmp	.-62     	; 0xdc <main+0x1a>
+ 11a:	87 e9       	ldi	r24, 0x97	; 151
+ 11c:	9a e3       	ldi	r25, 0x3A	; 58
+ 11e:	01 97       	sbiw	r24, 0x01	; 1
+ 120:	f1 f7       	brne	.-4      	; 0x11e <main+0x5c>
+ 122:	00 c0       	rjmp	.+0      	; 0x124 <main+0x62>
+ 124:	00 00       	nop
+		{
+			_delay_ms(60);
+			while (cero_en_bit(&PINA,7)){}
+ 126:	cf 9b       	sbis	0x19, 7	; 25
+ 128:	fe cf       	rjmp	.-4      	; 0x126 <main+0x64>
+ 12a:	87 e9       	ldi	r24, 0x97	; 151
+ 12c:	9a e3       	ldi	r25, 0x3A	; 58
+ 12e:	01 97       	sbiw	r24, 0x01	; 1
+ 130:	f1 f7       	brne	.-4      	; 0x12e <main+0x6c>
+ 132:	00 c0       	rjmp	.+0      	; 0x134 <main+0x72>
+ 134:	00 00       	nop
+			_delay_ms(60);
+			if(cont<=0) cont = 1;
+ 136:	89 81       	ldd	r24, Y+1	; 0x01
+ 138:	81 11       	cpse	r24, r1
+ 13a:	01 c0       	rjmp	.+2      	; 0x13e <main+0x7c>
+ 13c:	19 83       	std	Y+1, r17	; 0x01
+			cont--;
+ 13e:	89 81       	ldd	r24, Y+1	; 0x01
+ 140:	81 50       	subi	r24, 0x01	; 1
+ 142:	89 83       	std	Y+1, r24	; 0x01
+			mostrar(cont);
+ 144:	89 81       	ldd	r24, Y+1	; 0x01
+ 146:	0e 94 36 00 	call	0x6c	; 0x6c <mostrar>
+ 14a:	c8 cf       	rjmp	.-112    	; 0xdc <main+0x1a>
+
+0000014c <_exit>:
+ 14c:	f8 94       	cli
+
+0000014e <__stop_program>:
+ 14e:	ff cf       	rjmp	.-2      	; 0x14e <__stop_program>
